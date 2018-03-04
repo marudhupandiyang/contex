@@ -2,7 +2,7 @@
 
 import React, { createContext } from 'react';
 import Proptypes from 'prop-types';
-
+import shallowEqual from 'fbjs/lib/shallowEqual'
 
 const CurrentContext = createContext();
 
@@ -38,7 +38,9 @@ class Contex extends React.PureComponent {
 
     if (reducer) {
       const newState = reducer(currentState, action);
-      this.setState({ currentState: newState });
+      if (!shallowEqual(newState, currentState)) {
+        this.setState({ currentState: newState });
+      }
     }
   }
 
