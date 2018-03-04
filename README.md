@@ -22,52 +22,52 @@
 
  2. Declare your `rootReducer that reduces your actions to a state.
 
-      const rootReducer = (state, action) => {
-        switch (action.type) {
-          case 'increment': {
-            const newState = { ...state };
-            newState.count += 1;
-            return newState;
-          }
+        const rootReducer = (state, action) => {
+          switch (action.type) {
+            case 'increment': {
+              const newState = { ...state };
+              newState.count += 1;
+              return newState;
+            }
 
-          default:
-            return state;
-        }
-      };
+            default:
+              return state;
+          }
+        };
 
  3. Surround your root component to enable that state is passed to all the children.
 
-      import Contux from 'contux';
+        import Contux from 'contux';
 
-      const App = () => (
-        <Contux
-          initialState={initialState}
-          reducer={rootReducer}
-        >
-          <Tick />
-        </Contux>
-      );
+        const App = () => (
+          <Contux
+            initialState={initialState}
+            reducer={rootReducer}
+          >
+            <Tick />
+          </Contux>
+        );
 
 
  4. `connect` the component where you need state and dispatch functions.
 
-      const Tick = ({ tickCount, dispatch }) => (
-        <div>
-          Tick Count = {tickCount}
-          <br />
-          <button onClick={() => {
-            dispatch({
-              type: 'increment',
-            });
-          }}
-          >
-            Increment
-          </button>
-        </div>
-      );
+        const Tick = ({ tickCount, dispatch }) => (
+          <div>
+            Tick Count = {tickCount}
+            <br />
+            <button onClick={() => {
+              dispatch({
+                type: 'increment',
+              });
+            }}
+            >
+              Increment
+            </button>
+          </div>
+        );
 
-      const mapStateToProps = (state) => ({ tickCount: state.count });
-      export default connect(mapStateToProps)(Tick);
+        const mapStateToProps = (state) => ({ tickCount: state.count });
+        export default connect(mapStateToProps)(Tick);
 
 
 ## Roadmap:
