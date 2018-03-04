@@ -1,21 +1,26 @@
 import React from 'react';
 import { connect } from 'contex';
+import Proptypes from 'prop-types';
 
-class Tick extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+const Tick = ({ count, dispatch }) => (
+  <div>
+    Hello Tick {count}
+    <br />
+    <button onClick={() => {
+      dispatch({
+        type: 'inc',
+      });
+    }}
+    >
+      Increment
+    </button>
+  </div>
+);
 
-  render() {
-    debugger; // eslint-disable-line
-    return (
-      <div>
-        Hello Tick
-      </div>
-    );
-  }
-}
+Tick.propTypes = {
+  count: Proptypes.number.isRequired,
+  dispatch: Proptypes.func.isRequired,
+};
 
 
 export default connect()(Tick);

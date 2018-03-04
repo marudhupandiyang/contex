@@ -4,35 +4,26 @@ import Tick from './tick';
 
 const rootReducer = (state, action) => {
   switch (action.type) {
+    case 'inc': {
+      const newState = { ...state };
+      newState.count += 1;
+      return newState;
+    }
+
     default:
-      return {
-        ...(state || { count: 0 }),
-      };
+      return state;
   }
 };
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      key1: 'value',
-    };
-  }
-
-  render() {
-    console.log(`Dummy ${this.state.key1}`); // eslint-disable-line
-
-    return (
-      <Contex
-        initialState={{ key1: 'value' }}
-        reducer={rootReducer}
-      >
-        <Tick>
-          My Tick
-        </Tick>
-      </Contex>);
-  }
-}
-
+const App = () => (
+  <Contex
+    initialState={{ count: 0 }}
+    reducer={rootReducer}
+  >
+    <Tick>
+      My Tick
+    </Tick>
+  </Contex>
+);
 
 export default App;

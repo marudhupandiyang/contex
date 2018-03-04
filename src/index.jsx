@@ -1,5 +1,8 @@
+/* eslint-disable */
+
 import React, { createContext } from 'react';
 import Proptypes from 'prop-types';
+
 
 const CurrentContext = createContext();
 
@@ -17,25 +20,43 @@ class Contex extends React.PureComponent {
     }
 
     this.getState = this.getState.bind(this);
+    this.dispatch = this.dispatch.bind(this);
   }
 
   getState() {
     return this.state.currentState;
   }
 
-  render() {
-    // const {
-    //   currentState,
-    // } = this.state;
+  dispatch(action) {
+    const {
+      reducer,
+    } = this.props;
 
+    const {
+      currentState,
+    } = this.state;
+
+    if (reducer) {
+      const newState = reducer(currentState, action);
+      this.setState({ currentState: newState });
+    }
+  }
+
+  render() {
     const {
       children,
     } = this.props;
 
+    const {
+      getState,
+      dispatch,
+    } = this;
+
     return (
       <CurrentContext.Provider
         value={{
-          getState: this.getState,
+          getState,
+          dispatch,
         }}
       >
         {children}
@@ -55,17 +76,22 @@ Contex.propTypes = {
   reducer: Proptypes.func,
 };
 
-/* eslint-disable */
-export const connect = (mapStateToProps = (currentState => currentState)) =>
+const connect = (mapStateToProps = (currentState => currentState)) =>
   Component => ({ children, ...restProps }) => (
     <CurrentContext.Consumer>
       {
-        ({ getState }) => (
-          <Component {...mapStateToProps(getState())} {...restProps}>{children}</Component>
+        ({ getState, dispatch }) => (
+          <Component {...mapStateToProps(getState())} {...restProps} dispatch={dispatch}>{children}</Component>
         )
       }
     </CurrentContext.Consumer>
   );
-/* eslint-disable */
+
 export default Contex;
 
+export {
+  Contex,
+  connect,
+};
+
+/* eslint-disable */

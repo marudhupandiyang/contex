@@ -90,7 +90,7 @@ module.exports = __webpack_require__(1);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.connect = undefined;
+exports.connect = exports.Contex = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -112,7 +112,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint-disable */
 
 var CurrentContext = (0, _react.createContext)();
 
@@ -135,6 +135,7 @@ var Contex = function (_React$PureComponent) {
     }
 
     _this.getState = _this.getState.bind(_this);
+    _this.dispatch = _this.dispatch.bind(_this);
     return _this;
   }
 
@@ -144,20 +145,31 @@ var Contex = function (_React$PureComponent) {
       return this.state.currentState;
     }
   }, {
+    key: 'dispatch',
+    value: function dispatch(action) {
+      var reducer = this.props.reducer;
+      var currentState = this.state.currentState;
+
+
+      if (reducer) {
+        var newState = reducer(currentState, action);
+        this.setState({ currentState: newState });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
-      // const {
-      //   currentState,
-      // } = this.state;
-
       var children = this.props.children;
+      var getState = this.getState,
+          dispatch = this.dispatch;
 
 
       return _react2.default.createElement(
         CurrentContext.Provider,
         {
           value: {
-            getState: this.getState
+            getState: getState,
+            dispatch: dispatch
           }
         },
         children
@@ -179,7 +191,6 @@ Contex.propTypes = {
   reducer: _propTypes2.default.func
 };
 
-/* eslint-disable */
 var connect = function connect() {
   var mapStateToProps = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (currentState) {
     return currentState;
@@ -193,10 +204,11 @@ var connect = function connect() {
         CurrentContext.Consumer,
         null,
         function (_ref2) {
-          var getState = _ref2.getState;
+          var getState = _ref2.getState,
+              dispatch = _ref2.dispatch;
           return _react2.default.createElement(
             Component,
-            _extends({}, mapStateToProps(getState()), restProps),
+            _extends({}, mapStateToProps(getState()), restProps, { dispatch: dispatch }),
             children
           );
         }
@@ -204,9 +216,12 @@ var connect = function connect() {
     };
   };
 };
-/* eslint-disable */
-exports.connect = connect;
+
 exports.default = Contex;
+exports.Contex = Contex;
+exports.connect = connect;
+
+/* eslint-disable */
 
 /***/ }),
 /* 2 */
