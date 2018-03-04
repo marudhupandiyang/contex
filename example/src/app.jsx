@@ -1,5 +1,5 @@
 import React from 'react';
-import Contex from 'contex';
+import Contux from 'contux';
 import Tick from './tick';
 
 const rootReducer = (state, action) => {
@@ -16,14 +16,14 @@ const rootReducer = (state, action) => {
 };
 
 const App = () => (
-  <Contex
+  <Contux
     initialState={{ count: 0 }}
     reducer={rootReducer}
   >
     <Tick>
       My Tick
     </Tick>
-  </Contex>
+  </Contux>
 );
 
 export default App;

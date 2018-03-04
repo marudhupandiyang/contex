@@ -1,34 +1,26 @@
-var webpack = require('webpack')
+const webpack = require('webpack')
+const Visualizer = require('webpack-visualizer-plugin');
 
 module.exports = {
-
   entry: [
     './src/index.jsx'
   ],
   output: {
-    library: 'contex',
+    library: 'contux',
     libraryTarget: 'umd',
     path: __dirname + '/dist',
     publicPath: '/',
     filename: 'index.js'
   },
 
-  externals: [
-    {
-      react: {
-        root: 'React',
-        commonjs2: 'react',
-        commonjs: 'react',
-        amd: 'react'
-      },
-      lodash: {
-        root: '_',
-        commonjs2: 'lodash',
-        commonjs: 'lodash',
-        amd: 'lodash',
-      }
+  externals: {
+    react: {
+      root: 'React',
+      commonjs2: 'react',
+      commonjs: 'react',
+      amd: 'react'
     }
-  ],
+  },
   module: {
     rules: [
       {
@@ -48,11 +40,8 @@ module.exports = {
   resolve: {
     extensions: [".jsx", ".js"],
   },
-  node: {
-    Buffer: false
-  },
-
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin()
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new Visualizer()
   ]
 }

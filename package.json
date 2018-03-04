@@ -1,11 +1,11 @@
 {
-  "name": "contex",
+  "name": "contux",
   "version": "0.0.1",
-  "description": "Redux alternative using react context API",
+  "description": "Redux alternative using react contuxt API",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.config.js",
+    "build": "NODE_ENV=production webpack --config webpack.config.js",
     "prepublish": "npm run build",
     "npm:publish": "npm run prepublish && npm publish",
     "lint": "eslint src/",
@@ -13,21 +13,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/marudhupandiyang/contex.git"
+    "url": "git+ssh://git@github.com/marudhupandiyang/contux.git"
   },
   "keywords": [
-    "contex"
+    "contux"
   ],
   "author": "marudhupandiyang@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/marudhupandiyang/contex/issues"
+    "url": "https://github.com/marudhupandiyang/contux/issues"
   },
-  "homepage": "https://github.com/marudhupandiyang/contex#readme",
+  "homepage": "https://github.com/marudhupandiyang/contux#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
@@ -39,11 +40,11 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.5.1",
     "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.5"
+    "webpack-dev-server": "^2.9.5",
+    "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
-    "prop-types": "^15.6.0",
-    "react": "^16.3.0-alpha.1"
+    "react": "^16.3.0-alpha.1",
+    "shallow-equals": "^1.0.0"
   }
 }

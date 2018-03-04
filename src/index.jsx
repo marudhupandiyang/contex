@@ -1,12 +1,9 @@
-/* eslint-disable */
-
 import React, { createContext } from 'react';
-import Proptypes from 'prop-types';
-import shallowEqual from 'fbjs/lib/shallowEqual'
+import shallowEqual from 'shallow-equals';
 
 const CurrentContext = createContext();
 
-class Contex extends React.PureComponent {
+class Contux extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +12,7 @@ class Contex extends React.PureComponent {
 
     if (props.reducer && typeof props.reducer === 'function') {
       this.state.currentState = props.reducer(this.state.currentState, {
-        action: '@contex/INIT',
+        action: '@contux/INIT',
       });
     }
 
@@ -67,15 +64,9 @@ class Contex extends React.PureComponent {
   }
 }
 
-Contex.defaultProps = {
+Contux.defaultProps = {
   initialState: undefined,
   reducer: () => {},
-};
-
-Contex.propTypes = {
-  initialState: Proptypes.any, // eslint-disable-line
-  children: Proptypes.any.isRequired, // eslint-disable-line
-  reducer: Proptypes.func,
 };
 
 const connect = (mapStateToProps = (currentState => currentState)) =>
@@ -83,17 +74,21 @@ const connect = (mapStateToProps = (currentState => currentState)) =>
     <CurrentContext.Consumer>
       {
         ({ getState, dispatch }) => (
-          <Component {...mapStateToProps(getState())} {...restProps} dispatch={dispatch}>{children}</Component>
+          <Component
+            {...mapStateToProps(getState())}
+            {...restProps}
+            dispatch={dispatch}
+          >
+            {children}
+          </Component>
         )
       }
     </CurrentContext.Consumer>
   );
 
-export default Contex;
+export default Contux;
 
 export {
-  Contex,
+  Contux,
   connect,
 };
-
-/* eslint-disable */

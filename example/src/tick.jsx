@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'contex';
+import { connect } from 'contux';
 import Proptypes from 'prop-types';
 
 const Tick = ({ count, dispatch }) => (
