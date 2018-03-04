@@ -1,37 +1,71 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { map } from 'lodash';
+import React, { createContext } from 'react';
+import Proptypes from 'prop-types';
 
-class Contex extends React.Component {
+const CurrentContext = createContext();
+
+class Contex extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      currentState: props.initialState,
+    };
+
+    if (props.reducer && typeof props.reducer === 'function') {
+      this.state.currentState = props.reducer(this.state.currentState, {
+        action: '@contex/INIT',
+      });
+    }
+
+    this.getState = this.getState.bind(this);
+  }
+
+  getState() {
+    return this.state.currentState;
   }
 
   render() {
+    // const {
+    //   currentState,
+    // } = this.state;
+
     const {
-      data,
+      children,
     } = this.props;
 
-    debugger; // eslint-disable-line
-
     return (
-      <div
-        className="feed-container"
+      <CurrentContext.Provider
+        value={{
+          getState: this.getState,
+        }}
       >
-        {
-          map(data, section => (
-            <div key={section}>
-              {section}
-            </div>))
-        }
-      </div>
+        {children}
+      </CurrentContext.Provider>
     );
   }
 }
 
-Contex.propTypes = {
-  data: PropTypes.typeof([]).isRequired,
+Contex.defaultProps = {
+  initialState: undefined,
+  reducer: () => {},
 };
 
+Contex.propTypes = {
+  initialState: Proptypes.any, // eslint-disable-line
+  children: Proptypes.any.isRequired, // eslint-disable-line
+  reducer: Proptypes.func,
+};
+
+/* eslint-disable */
+export const connect = (mapStateToProps = (currentState => currentState)) =>
+  Component => ({ children, ...restProps }) => (
+    <CurrentContext.Consumer>
+      {
+        ({ getState }) => (
+          <Component {...mapStateToProps(getState())} {...restProps}>{children}</Component>
+        )
+      }
+    </CurrentContext.Consumer>
+  );
+/* eslint-disable */
 export default Contex;
+
