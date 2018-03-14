@@ -13,6 +13,10 @@
 
     yarn add contux
 
+## Features
+
+  1. Updates only when the state changes. This is made sure by `shallow compare` of the state.
+  2. Receives the Contux state and Component props in `mapStateToProps` function. Allows one to manipulate state based on the props before sending it to the component.
 
 ## Instructions
 
@@ -44,7 +48,7 @@
             initialState={initialState}
             reducer={rootReducer}
           >
-            <Tick />
+            <Tick name="John" />
           </Contux>
         );
 
@@ -53,7 +57,7 @@
 
         const Tick = ({ tickCount, dispatch }) => (
           <div>
-            Tick Count = {tickCount}
+            <b>{tickCounter}</b>
             <br />
             <button onClick={() => {
               dispatch({
@@ -66,7 +70,7 @@
           </div>
         );
 
-        const mapStateToProps = (state) => ({ tickCount: state.count });
+        const mapStateToProps = (state, props) => ({ tickCounter: `${props.name}: ${state.count}` });
         export default connect(mapStateToProps)(Tick);
 
 

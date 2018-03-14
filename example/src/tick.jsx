@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'contux';
 import Proptypes from 'prop-types';
 
-const Tick = ({ count, dispatch }) => (
+const Tick = ({ tickCounter, dispatch }) => (
   <div>
-    Hello Tick {count}
+    <b>{tickCounter}</b>
     <br />
     <button onClick={() => {
       dispatch({
-        type: 'inc',
+        type: 'increment',
       });
     }}
     >
@@ -18,9 +18,10 @@ const Tick = ({ count, dispatch }) => (
 );
 
 Tick.propTypes = {
-  count: Proptypes.number.isRequired,
+  tickCounter: Proptypes.number.isRequired,
   dispatch: Proptypes.func.isRequired,
 };
 
+const mapStateToProps = (state, props) => ({ tickCounter: `${props.name}: ${state.count}` });
 
-export default connect()(Tick);
+export default connect(mapStateToProps)(Tick);

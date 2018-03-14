@@ -4,7 +4,7 @@ import Tick from './tick';
 
 const rootReducer = (state, action) => {
   switch (action.type) {
-    case 'inc': {
+    case 'increment': {
       const newState = { ...state };
       newState.count += 1;
       return newState;
@@ -20,7 +20,7 @@ const App = () => (
     initialState={{ count: 0 }}
     reducer={rootReducer}
   >
-    <Tick>
+    <Tick name="Tick Counter">
       My Tick
     </Tick>
   </Contux>

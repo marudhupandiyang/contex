@@ -204,7 +204,7 @@ var connect = function connect() {
               dispatch = _ref2.dispatch;
           return _react2.default.createElement(
             Component,
-            _extends({}, mapStateToProps(getState()), restProps, {
+            _extends({}, restProps, mapStateToProps(getState(), restProps), {
               dispatch: dispatch
             }),
             children

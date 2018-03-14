@@ -75,8 +75,8 @@ const connect = (mapStateToProps = (currentState => currentState)) =>
       {
         ({ getState, dispatch }) => (
           <Component
-            {...mapStateToProps(getState())}
             {...restProps}
+            {...mapStateToProps(getState(), restProps)}
             dispatch={dispatch}
           >
             {children}
